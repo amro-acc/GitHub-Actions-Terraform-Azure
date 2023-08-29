@@ -4,7 +4,7 @@ variable "resource_group_name" {
   default     = "amit-actions-rg"
 }
 
-variable "resource_group_location" {
+variable "location" {
   description = "Location for the Azure Resource Group"
   type        = string
   default     = "East US"
