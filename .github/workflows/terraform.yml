@@ -8,14 +8,14 @@ on:
 jobs:
   build:
     name: 'Terraform'
-  	env:
-  		ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-  		ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_CLIENT_SECRET }}
-  		ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-  		ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  		RESOURCE_GROUP: 'amit-rg'
-  		STORAGE_ACCOUNT: 'amitstgtf'
-  		CONTAINER_NAME: 'tfstate'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      RESOURCE_GROUP: 'amit-rg'
+      STORAGE_ACCOUNT: 'amitstgtf'
+      CONTAINER_NAME: 'tfstate'
     
     runs-on: ubuntu-latest
   
@@ -39,6 +39,6 @@ jobs:
         run: terraform plan -out=tfplan
   
       - name: Apply Terraform
-        run: terraform apply tfplan
+        run: terraform apply tfplan -auto-approve
         only:
           - main
