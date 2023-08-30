@@ -3,6 +3,12 @@ name: 'Terraform Unit Tests'
 on:
   push:
 
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+  security-events: write   # To upload sarif files
+
 jobs:
   terraform-unit-tests:
     name: 'Terraform Unit Tests'
