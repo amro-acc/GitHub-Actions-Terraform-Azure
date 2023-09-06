@@ -120,7 +120,7 @@ jobs:
       # Terraform Apply
       #==================================================
       - name: Apply Terraform
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve -var-file=terraform.tfvars
 
       # - name: Destroy Terraform
       #   run: terraform destroy -auto-approve
