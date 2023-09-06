@@ -1,12 +1,14 @@
 name: GitHub-Actions-Terraform-Azure-Pipeline
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
-    branches:
-    - main
+# on:
+#   push:
+#     branches:
+#     - main
+#   pull_request:
+#     branches:
+#     - main
+
+on: workflow_dispatch
 
 #Special permissions required for OIDC authentication
 permissions:
