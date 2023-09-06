@@ -8,6 +8,7 @@ name: GitHub-Actions-Terraform-Azure-Pipeline
 #     branches:
 #     - main
 
+# manual trigger
 on: workflow_dispatch
 
 #Special permissions required for OIDC authentication
