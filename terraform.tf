@@ -4,10 +4,14 @@ terraform {
       source  = "hashicorp/azurerm"
       version = ">= 3.7.0"
     }
+    databricks = {
+      source  = "databricks/databricks"
+      version = "1.24.1"
+    }
   }
   backend "azurerm" {
-    resource_group_name  = "amit-rg"
-    storage_account_name = "amitstgtf"
+    resource_group_name  = "terraform-rg"
+    storage_account_name = "terraformstgtest"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
@@ -15,4 +19,8 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "databricks" {
+  # Configuration options
 }
