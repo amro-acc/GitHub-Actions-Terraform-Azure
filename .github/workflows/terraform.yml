@@ -36,19 +36,82 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
+
+      - name: Use Development Environment Variables
+        run: |
+          set +x
+          echo "ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=${{ secrets.AZURE_AD_TENANT_ID }}" >> $GITHUB_ENV
+          echo "ARM_CLIENT_ID=${{ secrets.AZURE_AD_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=${{ secrets.AZURE_AD_CLIENT_SECRET }}" >> $GITHUB_ENV
+          set -x
   
       - name: Terraform Init
+        id: init
         run: terraform init -upgrade
 
       - name: Terraform Format
+        id: fmt
         run: terraform fmt -recursive
 
       - name: Terraform Validate
+        id: validate
         run: terraform validate
   
-      - name: Plan Terraform
-        run: terraform plan -out=tfplan
+      # - name: Plan Terraform
+      #   run: terraform plan -out=tfplan
+
+      - name: Terraform plan and Checkov pre requisites
+        id: plan
+        run: |
+          terraform plan -no-color -var-file=terraform.tfvars -input=false --out tfplan.binary
+          terraform show -json tfplan.binary > tfplan.json
+
+      #==================================================
+      # Checkov Analysis                    
+      #==================================================
+      - name: Checkov Analysis
+        id: checkov
+        # if: github.event_name == 'pull_request'
+        run: checkov -f tfplan.json --soft-fail
+
+      #==================================================
+      # Terraform Format and Style              
+      #==================================================
+      - name: Terraform Format and Style
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          CHECKOV: "Checkov\n${{ steps.checkov.outputs.stdout }}"
+        with:
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            <details><summary>Show Plan and Checkov Summary</summary>
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+            </details>
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+      #==================================================
+      # Terraform Plan Status
+      #==================================================
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
   
+      #==================================================
+      # Terraform Apply
+      #==================================================
       - name: Apply Terraform
         run: terraform apply -auto-approve tfplan
 
