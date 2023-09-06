@@ -68,6 +68,13 @@ jobs:
           terraform show -json tfplan.binary > tfplan.json
 
       #==================================================
+      # Install Checkov                    
+      #==================================================
+      - name: Install Checkov
+        id: install-checkov
+        run: pip install checkov
+      
+      #==================================================
       # Checkov Analysis                    
       #==================================================
       - name: Checkov Analysis
