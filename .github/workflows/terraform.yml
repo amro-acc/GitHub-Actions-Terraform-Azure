@@ -8,6 +8,21 @@ on:
     branches:
     - main
 
+inputs:
+  environment:
+    type: environment
+    description: Select the environment
+  boolean:
+    type: boolean
+    description: True or False
+  choice:
+    type: choice
+    description: Make a choice
+    options:
+    - foo
+    - bar
+    - baz
+
 # manual trigger
 # on: workflow_dispatch
 
@@ -57,9 +72,6 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate
-  
-      # - name: Plan Terraform
-      #   run: terraform plan -out=tfplan
 
       - name: Terraform plan and Checkov pre requisites
         id: plan
@@ -79,7 +91,7 @@ jobs:
       #==================================================
       - name: Checkov Analysis
         id: checkov
-        # if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         run: checkov -f tfplan.json --soft-fail
 
       #==================================================
