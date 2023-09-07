@@ -70,9 +70,9 @@ jobs:
       #==================================================
       # Install Checkov                    
       #==================================================
-      - name: Install Checkov
-        id: install-checkov
-        run: pip install checkov
+      # - name: Install Checkov
+      #   id: install-checkov
+      #   run: pip install checkov
       
       #==================================================
       # Checkov Analysis                    
