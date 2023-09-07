@@ -12,7 +12,7 @@ databricks_workspaces = {
     git_provider                      = "azureDevOpsServices"
     personal_access_token             = "sometoken"
     */
-    # network_security_group_rules_required = "NoAzureDatabricksRules" // Required when public_network_access_enabled is set to false
+    network_security_group_rules_required = "NoAzureDatabricksRules" // Required when public_network_access_enabled is set to false
     tags = {
       Environment = "demo"
       application = "application name"
@@ -22,10 +22,9 @@ databricks_workspaces = {
     }
     custom_parameters = {
       # machine_learning_workspace_id = ""
-      nat_gateway_name = "elex-nat-gateway"
-      public_ip_name   = "elex-demo-eu2-ngwip-0001"
-      # no_public_ip     = false
-      # no_public_ip             = true
+      # nat_gateway_name = "elex-nat-gateway"
+      # public_ip_name   = "elex-demo-eu2-ngwip-0001"
+      no_public_ip             = true
       public_subnet_name       = "elex-demo-eu2-snet-0001"
       private_subnet_name      = "elex-demo-eu2-snet-0002"
       vnet_name                = "elex-demo-eu2-vnet-0001"
