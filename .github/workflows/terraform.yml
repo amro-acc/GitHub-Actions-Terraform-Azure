@@ -80,8 +80,7 @@ jobs:
       - name: Checkov Analysis
         id: checkov
         # if: github.event_name == 'pull_request'
-        # run: checkov -f tfplan.json --soft-fail
-        run: checkov -f tfplan.json
+        run: checkov -f tfplan.json --soft-fail
 
       #==================================================
       # Terraform Format and Style              
