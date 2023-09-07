@@ -77,10 +77,18 @@ jobs:
       #==================================================
       # Checkov Analysis                    
       #==================================================
-      - name: Checkov Analysis
+      # - name: Checkov Analysis
+      #   id: checkov
+      #   # if: github.event_name == 'pull_request'
+      #   run: checkov -f tfplan.json --soft-fail
+
+
+      # Perform a security scan of the terraform code using checkov
+      - name: Run Checkov action
         id: checkov
-        # if: github.event_name == 'pull_request'
-        run: checkov -f tfplan.json --soft-fail
+        uses: bridgecrewio/checkov-action@master
+        with: 
+          framework: terraform
 
       #==================================================
       # Terraform Format and Style              
