@@ -80,7 +80,7 @@ jobs:
         run: checkov -f tfplan.json --soft-fail
 
       #==================================================
-      # Terraform Format and Style              
+      # Terraform Format and Style
       #==================================================
       - name: Terraform Format and Style
         uses: actions/github-script@v6
@@ -117,8 +117,9 @@ jobs:
       #==================================================
       # Terraform Apply
       #==================================================
-      - name: Apply Terraform
-        run: terraform apply -auto-approve -var-file=terraform.tfvars
+      # - name: Apply Terraform
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   run: terraform apply -auto-approve -var-file=terraform.tfvars
 
-      # - name: Destroy Terraform
-      #   run: terraform destroy -auto-approve
+      - name: Destroy Terraform
+        run: terraform destroy -auto-approve
