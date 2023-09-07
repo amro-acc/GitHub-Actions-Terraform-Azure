@@ -34,7 +34,7 @@ resource "azurerm_databricks_workspace" "databricks" {
   }
 }
 
-resource "databricks_git_credential" "databricks" {
+/* resource "databricks_git_credential" "databricks" {
   for_each = {
     for key, value in try(var.databricks_workspaces, {}) : key => value
     if try(value.git_username, null) != null
@@ -45,4 +45,4 @@ resource "databricks_git_credential" "databricks" {
   depends_on = [
     azurerm_databricks_workspace.databricks
   ]
-}
+} */
