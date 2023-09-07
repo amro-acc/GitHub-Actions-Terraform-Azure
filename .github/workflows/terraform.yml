@@ -57,9 +57,6 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate
-  
-      # - name: Plan Terraform
-      #   run: terraform plan -out=tfplan
 
       - name: Terraform plan and Checkov pre requisites
         id: plan
@@ -79,7 +76,7 @@ jobs:
       #==================================================
       - name: Checkov Analysis
         id: checkov
-        # if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         run: checkov -f tfplan.json --soft-fail
 
       #==================================================
