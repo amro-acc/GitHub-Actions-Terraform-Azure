@@ -70,25 +70,18 @@ jobs:
       #==================================================
       # Install Checkov                    
       #==================================================
-      # - name: Install Checkov
-      #   id: install-checkov
-      #   run: pip install checkov
+      - name: Install Checkov
+        id: install-checkov
+        run: pip install checkov
       
       #==================================================
       # Checkov Analysis                    
       #==================================================
-      # - name: Checkov Analysis
-      #   id: checkov
-      #   # if: github.event_name == 'pull_request'
-      #   run: checkov -f tfplan.json --soft-fail
-
-
-      # Perform a security scan of the terraform code using checkov
-      - name: Run Checkov action
+      - name: Checkov Analysis
         id: checkov
-        uses: bridgecrewio/checkov-action@master
-        with: 
-          framework: terraform
+        # if: github.event_name == 'pull_request'
+        # run: checkov -f tfplan.json --soft-fail
+        run: checkov -f tfplan.json
 
       #==================================================
       # Terraform Format and Style              
