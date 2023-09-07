@@ -92,6 +92,7 @@ jobs:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
           CHECKOV: "Checkov\n${{ steps.checkov.outputs.stdout }}"
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
