@@ -70,16 +70,16 @@ jobs:
       #==================================================
       # Install Checkov                    
       #==================================================
-      - name: Install Checkov
-        id: install-checkov
-        run: pip install checkov
+      # - name: Install Checkov
+      #   id: install-checkov
+      #   run: pip install checkov
       
       #==================================================
       # Checkov Analysis                    
       #==================================================
       - name: Checkov Analysis
         id: checkov
-        # if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         run: checkov -f tfplan.json --soft-fail
 
       #==================================================
