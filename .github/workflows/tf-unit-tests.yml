@@ -44,6 +44,7 @@ jobs:
       with: 
         framework: terraform
         soft_fail: true
+        log_level: DEBUG
 
     # Upload results to GitHub Advanced Security
     - name: Upload SARIF file
